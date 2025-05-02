@@ -4,15 +4,15 @@
 
 /* Custom properties and responsive breakpoints */
 :root {
-  --color-brand--1: #ffb545;
-  --color-brand--2: #00c46a;
+  --color-brand--1: #b84bff;
+  --color-brand--2: #9747ff;
 
-  --color-dark--0: #242a2e;
-  --color-dark--1: #2d3439;
-  --color-dark--2: #42484d;
-  --color-light--1: #aaa;
-  --color-light--2: #ececec;
-  --color-light--3: #d6dee0;
+  --color-dark--0: #000000;
+  --color-dark--1: #1a1a1a;
+  --color-dark--2: #333333;
+  --color-light--1: #f2f2f2;
+  --color-light--2: #ffffff;
+  --color-light--3: #e6e6e6;
 
   /* Breakpoints */
   --bp-small: 36em;      /* 576px */
@@ -115,7 +115,7 @@ textarea:focus {
   outline: none;
   background-color: #fff;
   border-color: var(--color-brand--2);
-  box-shadow: 0 0 0 2px rgba(0, 196, 106, 0.1);
+  box-shadow: 0 0 0 2px rgba(123, 44, 191, 0.1);
 }
 
 /* Focus visible for accessibility */

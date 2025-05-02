@@ -2,17 +2,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 4rem;
-  background: rgba(36, 42, 46, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  padding: 1.5rem 4rem;
+  background: var(--color-dark--0);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
   transition: all var(--transition-normal);
+  border-bottom: 1px solid var(--color-dark--2);
 }
+
+
 
 .nav.scrolled {
   padding: 1rem 4rem;
@@ -20,26 +21,78 @@
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-.nav ul {
+.navList {
   list-style: none;
   display: flex;
   align-items: center;
   gap: 4rem;
+  margin: 0;
+  padding: 0;
 }
 
-@media (max-width: 48em) {
-  .nav ul {
-    gap: 2rem;
-  }
+.menuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
 }
 
-@media (max-width: 36em) {
+.menuButton span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-light--2);
+  transition: all 0.3s;
+  margin: 5px 0;
+}
+
+.menuButton.active span:first-child {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menuButton.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuButton.active span:last-child {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media (max-width: 768px) {
   .nav {
-    padding: 1.5rem 2rem;
+    padding: 1rem 2rem;
   }
-  
-  .nav ul {
-    gap: 1.5rem;
+
+  .menuButton {
+    display: block;
+  }
+
+  .navList {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    background: var(--color-dark--0);
+    padding: 8rem 4rem 4rem;
+    flex-direction: column;
+    gap: 2rem;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .menuOpen .navList {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav.scrolled {
+    padding: 1rem 2rem;
   }
 }
 
@@ -48,17 +101,16 @@
   text-decoration: none;
   color: var(--color-light--2);
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: all var(--transition-fast);
-  position: relative;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
 }
 
 .nav a:hover {
-  color: var(--color-brand--1);
-  transform: translateY(-2px);
+  color: var(--color-light--2);
+  border-bottom-color: var(--color-brand--1);
 }
 
 .nav a::after {
@@ -79,8 +131,8 @@
 
 /* CSS Modules feature */
 .nav a:global(.active) {
-  color: var(--color-brand--2);
-  background: rgba(0, 196, 106, 0.1);
+  color: var(--color-light--2);
+  border-bottom-color: var(--color-brand--1);
 }
 
 .nav a:global(.active)::after {
