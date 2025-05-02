@@ -7,22 +7,45 @@
 
   background-color: var(--color-dark--2);
   border-radius: 7px;
-  padding: 1rem 2rem;
+  padding: 1.2rem 2rem;
   border-left: 5px solid var(--color-brand--2);
   cursor: pointer;
 
   color: inherit;
   text-decoration: none;
+  transition: all var(--transition-fast);
+  position: relative;
+  transform-origin: left;
+
+  /* Add subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cityItem:hover {
+  transform: translateX(4px);
+  background-color: var(--color-dark--1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cityItem:active {
+  transform: translateX(2px);
 }
 
 .cityItem--active {
   border: 2px solid var(--color-brand--2);
   border-left: 5px solid var(--color-brand--2);
+  background-color: var(--color-dark--1);
+  box-shadow: 0 0 0 2px rgba(0, 196, 106, 0.1);
 }
 
 .emoji {
   font-size: 2.6rem;
   line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.cityItem:hover .emoji {
+  transform: scale(1.2);
 }
 
 .name {
@@ -36,7 +59,7 @@
 }
 
 .deleteBtn {
-  height: 2rem;
+  height: 2.4rem;
   aspect-ratio: 1;
   border-radius: 50%;
   border: none;
@@ -45,10 +68,47 @@
   font-size: 1.6rem;
   font-weight: 400;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
 }
 
 .deleteBtn:hover {
   background-color: var(--color-brand--1);
   color: var(--color-dark--1);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.deleteBtn:active {
+  transform: scale(0.95);
+}
+
+/* Mobile adjustments */
+@media (max-width: 36em) {
+  .cityItem,
+  .cityItem:link,
+  .cityItem:visited {
+    padding: 1.5rem;
+    gap: 1.2rem;
+  }
+
+  .emoji {
+    font-size: 2.2rem;
+  }
+
+  .name {
+    font-size: 1.5rem;
+  }
+
+  .date {
+    font-size: 1.3rem;
+  }
+
+  .deleteBtn {
+    height: 3rem;
+    opacity: 1;
+  }
 }

@@ -10,10 +10,11 @@ const BASE_URL = "http://localhost:9000";
 
 const CitiesContext = createContext();
 
+// Get initial state from localStorage or use default
 const initialState = {
-  cities: [],
+  cities: JSON.parse(localStorage.getItem('cities')) || [],
   isLoading: false,
-  currentCity: {},
+  currentCity: JSON.parse(localStorage.getItem('currentCity')) || {},
   error: "",
 };
 
@@ -66,8 +67,20 @@ function CitiesProvider({ children }) {
     initialState
   );
 
+  // Save to localStorage whenever cities or currentCity changes
+  useEffect(() => {
+    localStorage.setItem('cities', JSON.stringify(cities));
+  }, [cities]);
+
+  useEffect(() => {
+    localStorage.setItem('currentCity', JSON.stringify(currentCity));
+  }, [currentCity]);
+
+  // Only fetch from API if no cities in localStorage
   useEffect(function () {
     async function fetchCities() {
+      if (cities.length > 0) return; // Don't fetch if we have cities in localStorage
+      
       dispatch({ type: "loading" });
 
       try {
@@ -82,7 +95,7 @@ function CitiesProvider({ children }) {
       }
     }
     fetchCities();
-  }, []);
+  }, [cities.length]);
 
   const getCity = useCallback(
     async function getCity(id) {
@@ -108,17 +121,29 @@ function CitiesProvider({ children }) {
     dispatch({ type: "loading" });
 
     try {
-      const res = await fetch(`${BASE_URL}/cities`, {
-        method: "POST",
-        body: JSON.stringify(newCity),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
+      // Generate a unique ID since we're not using a backend
+      const cityWithId = {
+        ...newCity,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+      };
 
-      dispatch({ type: "city/created", payload: data });
-    } catch {
+      // Save directly to state/localStorage instead of API
+      dispatch({ type: "city/created", payload: cityWithId });
+
+      // Optionally, you can still try to sync with the backend
+      try {
+        await fetch(`${BASE_URL}/cities`, {
+          method: "POST",
+          body: JSON.stringify(cityWithId),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (e) {
+        console.log('Failed to sync with backend, but city was saved locally');
+      }
+    } catch (e) {
       dispatch({
         type: "rejected",
         payload: "There was an error creating the city...",
@@ -130,12 +155,18 @@ function CitiesProvider({ children }) {
     dispatch({ type: "loading" });
 
     try {
-      await fetch(`${BASE_URL}/cities/${id}`, {
-        method: "DELETE",
-      });
-
+      // Delete from state/localStorage first
       dispatch({ type: "city/deleted", payload: id });
-    } catch {
+
+      // Optionally try to sync with backend
+      try {
+        await fetch(`${BASE_URL}/cities/${id}`, {
+          method: "DELETE",
+        });
+      } catch (e) {
+        console.log('Failed to sync deletion with backend, but city was removed locally');
+      }
+    } catch (e) {
       dispatch({
         type: "rejected",
         payload: "There was an error deleting the city...",

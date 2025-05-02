@@ -1,7 +1,23 @@
 .app {
+  min-height: 100vh;
   height: 100vh;
   padding: 2.4rem;
   overscroll-behavior-y: none;
   display: flex;
   position: relative;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 48em) {
+  .app {
+    padding: 1.6rem;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 36em) {
+  .app {
+    padding: 1rem;
+  }
 }

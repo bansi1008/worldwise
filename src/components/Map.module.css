@@ -3,30 +3,96 @@
   height: 100%;
   background-color: var(--color-dark--2);
   position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 48em) {
+  .mapContainer {
+    height: 60vh;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 36em) {
+  .mapContainer {
+    height: 50vh;
+  }
 }
 
 .map {
   height: 100%;
+  width: 100%;
+  transition: all var(--transition-normal);
+}
+
+/* Enhance map controls for touch devices */
+:global(.leaflet-touch .leaflet-control-zoom),
+:global(.leaflet-touch .leaflet-control-layers) {
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+:global(.leaflet-control-zoom-in),
+:global(.leaflet-control-zoom-out) {
+  background-color: var(--color-dark--1) !important;
+  color: var(--color-light--2) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+:global(.leaflet-control-zoom-in:hover),
+:global(.leaflet-control-zoom-out:hover) {
+  background-color: var(--color-dark--2) !important;
+  color: var(--color-brand--1) !important;
 }
 
 /* Here we want to style classes that are coming from leaflet. So we want CSS Modules to give us the ACTUAL classnames, not to add some random ID to them, because then they won't match the classnames defined inside the map. The solution is to define these classes as GLOBAL */
 :global(.leaflet-popup .leaflet-popup-content-wrapper) {
   background-color: var(--color-dark--1);
   color: var(--color-light--2);
-  border-radius: 5px;
-  padding-right: 0.6rem;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform-origin: bottom;
+  animation: popupFadeIn 0.3s ease-out;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 :global(.leaflet-popup .leaflet-popup-content) {
-  font-size: 1.5rem;
+  font-size: clamp(1.4rem, 2vw, 1.5rem);
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin: 0.5rem;
+  min-width: 200px;
+}
+
+@media (max-width: 36em) {
+  :global(.leaflet-popup .leaflet-popup-content) {
+    min-width: 150px;
+    gap: 0.8rem;
+  }
 }
 
 :global(.leaflet-popup .leaflet-popup-content span:first-child) {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 3vw, 2.5rem);
   line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+:global(.leaflet-popup:hover .leaflet-popup-content span:first-child) {
+  transform: scale(1.2);
 }
 
 :global(.leaflet-popup .leaflet-popup-tip) {
@@ -35,4 +101,25 @@
 
 :global(.leaflet-popup-content-wrapper) {
   border-left: 5px solid var(--color-brand--2);
+  transition: all var(--transition-fast);
+}
+
+:global(.leaflet-popup:hover .leaflet-popup-content-wrapper) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Make map more touch-friendly on mobile */
+@media (max-width: 48em) {
+  :global(.leaflet-control-zoom) {
+    transform: scale(1.2);
+    margin: 1.2rem !important;
+  }
+
+  :global(.leaflet-touch .leaflet-control-zoom a) {
+    width: 36px !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-size: 1.6rem !important;
+  }
 }

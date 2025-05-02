@@ -3,32 +3,304 @@
   padding: 2.5rem 5rem;
   background-color: var(--color-dark--1);
   min-height: calc(100vh - 5rem);
+  overflow-x: hidden;
 }
 
-.product section {
-  width: clamp(80rem, 80%, 90rem);
-  margin: 6rem auto;
+/* Hero Section */
+.hero {
+  width: clamp(80rem, 90%, 120rem);
+  margin: 4rem auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 7rem;
   align-items: center;
+  animation: fadeIn 1s ease-out;
 }
 
-.product img {
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero img {
   width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
 }
 
-.product h2 {
-  font-size: 4rem;
+.hero img:hover {
+  transform: scale(1.02);
+}
+
+.heroContent h2 {
+  font-size: clamp(3rem, 5vw, 4.5rem);
   line-height: 1.2;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #e6b980 0%, #eacda3 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.heroContent p {
+  font-size: 1.8rem;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  color: var(--color-light--2);
+}
+
+/* Features */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 4rem 0;
+}
+
+.feature {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.feature h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-brand--2);
+}
+
+.feature p {
+  font-size: 1.6rem;
+  color: var(--color-light--2);
+}
+
+/* CTA Buttons */
+.cta {
+  display: flex;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.ctaLink,
+.ctaLinkSecondary {
+  display: inline-block;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.ctaLink {
+  background: var(--color-brand--2);
+  color: var(--color-dark--0);
+}
+
+.ctaLink:hover {
+  background: var(--color-brand--1);
+  transform: translateY(-2px);
+}
+
+.ctaLinkSecondary {
+  background: transparent;
+  color: var(--color-light--2);
+  border: 2px solid var(--color-light--2);
+}
+
+.ctaLinkSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Details Section */
+.details {
+  width: clamp(80rem, 90%, 120rem);
+  margin: 8rem auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 7rem;
+  align-items: center;
+}
+
+.detailsContent h2 {
+  font-size: 3.6rem;
+  margin-bottom: 4rem;
+  color: var(--color-brand--2);
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+}
+
+.benefit h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-light--1);
+}
+
+.benefit p {
+  font-size: 1.6rem;
+  color: var(--color-light--2);
+}
+
+.detailsImage {
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Pricing Section */
+.pricing {
+  width: clamp(80rem, 90%, 120rem);
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.pricingHeader {
+  margin-bottom: 6rem;
+}
+
+.pricingHeader h2 {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #e6b980 0%, #eacda3 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  margin: 4rem 0;
+}
+
+.pricingCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 4rem 3rem;
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricingCard:hover {
+  transform: translateY(-5px);
+}
+
+.pricingCard.featured {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid var(--color-brand--2);
+}
+
+.pricingCardHeader {
   margin-bottom: 3rem;
 }
 
-.product p {
-  font-size: 1.6rem;
-  margin-bottom: 2rem;
+.pricingCardHeader h3 {
+  font-size: 2.4rem;
+  color: var(--color-brand--2);
+  margin-bottom: 1rem;
 }
 
-.product section a {
-  margin-top: 2rem;
+.price {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--color-light--1);
+}
+
+.price span {
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--color-light--2);
+}
+
+.badge {
+  position: absolute;
+  top: 2rem;
+  right: -3rem;
+  background: var(--color-brand--2);
+  color: var(--color-dark--0);
+  padding: 0.5rem 4rem;
+  transform: rotate(45deg);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.features {
+  list-style: none;
+  margin: 3rem 0;
+  text-align: left;
+}
+
+.features li {
+  margin: 1.5rem 0;
+  color: var(--color-light--2);
+  font-size: 1.6rem;
+}
+
+.guarantee {
+  margin-top: 6rem;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.guarantee h3 {
+  font-size: 2.4rem;
+  color: var(--color-brand--2);
+  margin-bottom: 1rem;
+}
+
+.guarantee p {
+  font-size: 1.6rem;
+  color: var(--color-light--2);
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .product {
+    margin: 0;
+    padding: 2rem;
+  }
+
+  .hero,
+  .details {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    text-align: center;
+  }
+
+  .features,
+  .benefits {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .cta {
+    justify-content: center;
+  }
+
+  .pricingGrid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 4rem auto;
+  }
 }

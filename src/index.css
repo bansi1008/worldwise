@@ -2,7 +2,7 @@
 @import "https://unpkg.com/leaflet@1.9.3/dist/leaflet.css";
 @import "https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap";
 
-/* These CSS variables are global, so they are available in all CSS modules */
+/* Custom properties and responsive breakpoints */
 :root {
   --color-brand--1: #ffb545;
   --color-brand--2: #00c46a;
@@ -13,6 +13,24 @@
   --color-light--1: #aaa;
   --color-light--2: #ececec;
   --color-light--3: #d6dee0;
+
+  /* Breakpoints */
+  --bp-small: 36em;      /* 576px */
+  --bp-medium: 48em;     /* 768px */
+  --bp-large: 62em;      /* 992px */
+  --bp-xlarge: 75em;     /* 1200px */
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 4rem;
+
+  /* Transitions */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
 }
 
 * {
@@ -24,6 +42,20 @@
 html {
   font-size: 62.5%;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+/* Responsive font-size adjustments */
+@media (max-width: 48em) {
+  html {
+    font-size: 56.25%; /* 9px */
+  }
+}
+
+@media (max-width: 36em) {
+  html {
+    font-size: 50%; /* 8px */
+  }
 }
 
 body {
@@ -31,6 +63,26 @@ body {
   color: var(--color-light--2);
   font-weight: 400;
   line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-dark--1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand--1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand--2);
 }
 
 label {
@@ -44,15 +96,32 @@ textarea {
   padding: 0.8rem 1.2rem;
   font-family: inherit;
   font-size: 1.6rem;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 5px;
   background-color: var(--color-light--3);
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
-input:focus {
+@media (max-width: 36em) {
+  input,
+  textarea {
+    font-size: 1.6rem;
+    padding: 1rem;
+  }
+}
+
+input:focus,
+textarea:focus {
   outline: none;
   background-color: #fff;
+  border-color: var(--color-brand--2);
+  box-shadow: 0 0 0 2px rgba(0, 196, 106, 0.1);
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-brand--1);
+  outline-offset: 2px;
 }
 
 .cta:link,
@@ -66,6 +135,32 @@ input:focus {
   font-weight: 600;
   padding: 1rem 3rem;
   border-radius: 5px;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cta:hover,
+.cta:active {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+.cta:active {
+  transform: translateY(-1px);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile styles */
+@media (max-width: 36em) {
+  .cta:link,
+  .cta:visited {
+    padding: 1.2rem 2.4rem;
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /*
